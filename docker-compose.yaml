@@ -1,0 +1,22 @@
+services:
+  database:
+    container_name: art-portfolios-database
+    image: mysql:8.0
+    env_file:
+      - backend/.env
+    volumes:
+      - /tmp/app/mysqld:/var/run/mysqld
+
+  backend:
+    container_name: art-portfolios-backend
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/backend
+      - /tmp/app/mysqld:/run/mysqld
+    ports:
+      - "8000:8000"
+    env_file:
+      - backend/.env
+    depends_on:
+      - database
