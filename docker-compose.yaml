@@ -1,5 +1,6 @@
+version: "3.9"
 services:
-  database:
+  db:
     container_name: art-portfolios-database
     image: mysql:8.0
     env_file:
@@ -13,13 +14,15 @@ services:
     container_name: art-portfolios-backend
     build:
       context: .
-    command: python manage.py runserver 0.0.0.0:8000
     env_file:
       - .env
+    command: >
+      sh -c "python manage.py wait_for_db &&
+             python manage.py runserver 0.0.0.0:8000"
     volumes:
       - ./backend:/backend
       - /tmp/app/mysqld:/run/mysqld
     ports:
       - "8000:8000"
     depends_on:
-      - database
+      - db

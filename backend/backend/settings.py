@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -76,12 +78,12 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': 'database',
-        'PORT': '3306',
-        'NAME': 'art-portfolios',
-        'USER': 'db-user',
-        'PASSWORD': 'pass123',
+        'ENGINE'  : 'django.db.backends.mysql',
+        'NAME'    : os.environ.get('DB_NAME'),
+        'USER'    : os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST'    : os.environ.get('DB_HOST'),
+        'PORT'    : os.environ.get('DB_PORT'),
     }
 }
 
