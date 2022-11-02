@@ -4,6 +4,7 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
 COPY ./requirements.txt /tmp/requirements.txt
+COPY ./scripts /scripts
 COPY ./backend /backend
 WORKDIR /backend
 EXPOSE 8000
@@ -14,3 +15,10 @@ RUN apk update && \
 
 RUN pip install -r /tmp/requirements.txt && \
     rm -rf /tmp
+
+RUN mkdir -p /vol/web/static && \
+    mkdir -p /vol/web/media && \
+    chmod -R +x /scripts
+
+ENV PATH="/scripts:$PATH"
+CMD [ "entrypoint.sh" ]
