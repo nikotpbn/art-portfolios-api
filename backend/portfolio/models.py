@@ -21,13 +21,15 @@ class Art(models.Model):
         (6, 'Digital')
     ]
 
-    id = models.IntegerField(primary_key=True)
-    title = models.CharField(max_length=256, null=False)
-    subtitle = models.CharField(max_length=256, null=True)
-    description = models.TextField(max_length=512, null=True)
-    image = models.FileField(upload_to=image_file_path)
-    type = models.IntegerField(choices=Options, null=False)
+    title = models.CharField(max_length=256)
+    subtitle = models.CharField(max_length=256)
+    description = models.TextField(max_length=512, blank=True)
+    image = models.ImageField(null=True, upload_to=image_file_path)
+    type = models.IntegerField(choices=Options)
     created_at = models.DateField(null=False, default=now)
 
     class Meta:
         db_table = 'portfolio_art'
+
+    def __str__(self):
+        return self.title

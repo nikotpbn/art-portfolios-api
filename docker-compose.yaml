@@ -21,7 +21,7 @@ services:
              python manage.py makemigrations core &&
              python manage.py makemigrations portfolio &&
              python manage.py migrate &&
-             python manage.py collectstatic &&
+             python manage.py collectstatic --noinput &&
              python manage.py runserver 0.0.0.0:8000"
     volumes:
       - dev-static-data:/vol/web
