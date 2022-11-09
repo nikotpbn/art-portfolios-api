@@ -11,6 +11,28 @@ def image_file_path(instance, filename):
 
     return upload_path
 
+
+class TagGroup(models.Model):
+    name = models.CharField(max_length=256)
+
+    class Meta:
+        db_table = 'portfolio_tag_group'
+
+    def __str__(self):
+        return self.name
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length=256)
+    group = models.ForeignKey(TagGroup, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'portfolio_tag'
+
+    def __str__(self):
+        return self.name
+
+
 class Art(models.Model):
     Options = [
         (1, 'Drawing'),
@@ -27,6 +49,7 @@ class Art(models.Model):
     image = models.ImageField(null=True, upload_to=image_file_path)
     type = models.IntegerField(choices=Options)
     created_at = models.DateField(null=False, default=now)
+    tags = models.ManyToManyField(Tag, db_table='portfolio_art_tag')
 
     class Meta:
         db_table = 'portfolio_art'
