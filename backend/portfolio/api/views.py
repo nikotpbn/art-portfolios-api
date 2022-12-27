@@ -11,6 +11,11 @@ from portfolio.api.serializers import (
         ArtImageSerializer
     )
 
+class ArtistViewSet(viewsets.ModelViewSet):
+    """ CRUD Artist objects"""
+    pass
+
+
 
 class ArtViewSet(viewsets.ModelViewSet):
     """

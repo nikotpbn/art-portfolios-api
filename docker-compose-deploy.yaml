@@ -6,7 +6,7 @@ services:
     env_file:
       - .db.env
     volumes:
-      - database-data:/var/lib/mysql
+      - db-data:/var/lib/mysql
     ports:
       - "3306:3306"
 
@@ -18,7 +18,6 @@ services:
       - .env
     volumes:
       - static-data:/vol/web
-      - ./backend:/backend
     ports:
       - "8000:8000"
     depends_on:
@@ -28,24 +27,25 @@ services:
     container_name: art-portfolios-frontend
     build:
       context: ./frontend
+      dockerfile: deploy.Dockerfile
     volumes:
-      - static-data:/vol/static
+      -  static-data:/vol/static
     ports:
       - "8080:80"
     depends_on:
       - db
       - backend
 
-  npm:
-    build:
-      context: ./dockerfiles
-      dockerfile: npm-util.Dockerfile
-    stdin_open: true
-    tty: true
-    volumes:
-      - ./frontend:/frontend
+  # npm:
+  #   build:
+  #     context: ./dockerfiles
+  #     dockerfile: npm-util.Dockerfile
+  #   stdin_open: true
+  #   tty: true
+  #   volumes:
+  #     - ./frontend:/frontend
 
 
 volumes:
-  static-data:
-  database-data:
+  dev-static-data:
+  dev-db-data:

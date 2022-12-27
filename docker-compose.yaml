@@ -32,25 +32,27 @@ services:
       - db
 
   frontend:
-    container_name: art-portfolios-frontend
+    container_name: dev-art-portfolios-frontend
     build:
       context: ./frontend
+      dockerfile: dev.Dockerfile
     volumes:
       - dev-static-data:/vol/static
+      - ./frontend:/frontend
     ports:
-      - "8080:80"
+      - "5173:5173"
     depends_on:
       - db
       - backend
 
-  npm:
-    build:
-      context: ./dockerfiles
-      dockerfile: npm-util.Dockerfile
-    stdin_open: true
-    tty: true
-    volumes:
-      - ./frontend:/frontend
+  # npm:
+  #   build:
+  #     context: ./dockerfiles
+  #     dockerfile: npm-util.Dockerfile
+  #   stdin_open: true
+  #   tty: true
+  #   volumes:
+  #     - ./frontend:/frontend
 
 
 volumes:

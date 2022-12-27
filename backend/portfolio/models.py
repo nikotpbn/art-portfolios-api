@@ -33,8 +33,17 @@ class Tag(models.Model):
         return self.name
 
 
+class Artist(models.Model):
+    name = models.CharField(max_length=256)
+    image = models.ImageField(null=True, upload_to=image_file_path)
+    instagram =models.CharField(max_length=128)
+    deviant =models.CharField(max_length=128)
+    uuid = models.UUIDField(editable=False, default=uuid.uuid4)
+    slug = models.SlugField(max_length=255, unique=True)
+
+
 class Art(models.Model):
-    Options = [
+    TYPE_CHOICES = [
         (1, 'Drawing'),
         (2, 'Painting'),
         (3, 'Sculpture'),
@@ -47,9 +56,10 @@ class Art(models.Model):
     subtitle = models.CharField(max_length=256)
     description = models.TextField(max_length=512, blank=True)
     image = models.ImageField(null=True, upload_to=image_file_path)
-    type = models.IntegerField(choices=Options)
+    type = models.IntegerField(choices=TYPE_CHOICES)
     created_at = models.DateField(null=False, default=now)
     tags = models.ManyToManyField(Tag, db_table='portfolio_art_tag')
+    artists = models.ForeignKey(Artist, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'portfolio_art'

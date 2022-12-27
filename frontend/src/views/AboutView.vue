@@ -1,11 +1,14 @@
 <template>
-    <div class="about">
-        <h1>This is an about page</h1>
-    </div>
+    <Navbar/>
+    <AboutContainer/>
 </template>
 
 <script>
+import Navbar from '@/components/Navbar.vue'
+import AboutContainer from '@/components/About.vue'
+
  export default {
     name: 'About',
+    components: { Navbar, AboutContainer}
  }
 </script>

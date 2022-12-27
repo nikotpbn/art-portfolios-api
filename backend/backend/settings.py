@@ -27,7 +27,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = [
-        'localhost',
+        '192.168.1.244',
+        'localhost'
     ]
 
 
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     'core',
     'portfolio',
 
+    'djoser',
     'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
@@ -158,7 +160,10 @@ REST_FRAMEWORK = {
 }
 
 CORS_ALLOWED_ORIGINS = [
+    'http://192.168.1.244:8080',
+    'http://192.168.1.244:5173',
     'http://localhost:8080',
+    'http://localhost:5173',
 ]
 
 SPECTACULAR_SETTINGS = {

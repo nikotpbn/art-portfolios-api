@@ -10,8 +10,23 @@ const routes = [
     {
         path: '/about',
         name: 'about',
-        component: HomeView
-    }
+        component: () => import('../views/AboutView.vue')
+    },
+    {
+        path: '/system',
+        name: 'system',
+        component: () => import('../views/system/SystemLoginView.vue')
+    },
+    {
+        path: '/system/dashboard',
+        name: 'dashboard',
+        component: () => import('../views/system/DashboardView.vue')
+    },
+    {
+        path: '/:pathMatch(.*)*',
+        name: 'not-found',
+        component: () => import('../views/NotFoundView.vue')
+    },
 ]
 
 const router = createRouter({

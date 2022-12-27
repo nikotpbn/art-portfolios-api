@@ -10,3 +10,4 @@ class TagFilter(admin.FieldListFilter):
 admin.site.register(models.Art)
 admin.site.register(models.Tag)
 admin.site.register(models.TagGroup)
+admin.site.register(models.Artist)
