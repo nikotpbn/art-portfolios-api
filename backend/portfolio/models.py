@@ -41,6 +41,9 @@ class Artist(models.Model):
     uuid = models.UUIDField(editable=False, default=uuid.uuid4)
     slug = models.SlugField(max_length=255, unique=True)
 
+    def __str__(self):
+        return self.name
+
 
 class Art(models.Model):
     TYPE_CHOICES = [
@@ -66,3 +69,20 @@ class Art(models.Model):
 
     def __str__(self):
         return self.title
+
+class Character(models.Model):
+
+    class Sex(models.TextChoices):
+        MALE = 'M', 'Male'
+        FEMALE = 'F', 'Female'
+
+    page_id = models.CharField(max_length=10)
+    name = models.CharField(max_length=255)
+    slug = models.SlugField()
+    sex = models.CharField(max_length=1, choices=Sex.choices)
+    alive = models.BooleanField()
+    first_appearance = models.DateField()
+
+    def __str__(self):
+        return self.name
+
