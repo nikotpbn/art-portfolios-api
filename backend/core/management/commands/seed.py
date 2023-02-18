@@ -55,4 +55,4 @@ class Command(BaseCommand):
         if not created:
             self.stdout.write(f'Tag {tag.name} already exists, skipping creation...')
         else:
-            self.stdout.write(f'Creating Tag Object: {tag.name}')d
+            self.stdout.write(f'Creating Tag Object: {tag.name}')
