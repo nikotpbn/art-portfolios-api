@@ -3,6 +3,8 @@ from django.conf import settings
 import uuid
 import os
 from django.utils.timezone import now
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 
 def image_file_path(instance, filename):
     ext = filename.split('.')[-1]
@@ -36,13 +38,19 @@ class Tag(models.Model):
 class Artist(models.Model):
     name = models.CharField(max_length=256)
     image = models.ImageField(null=True, upload_to=image_file_path)
-    instagram =models.CharField(max_length=128)
-    deviant =models.CharField(max_length=128)
+    instagram =models.CharField(max_length=128, blank=True, null=True)
+    deviant =models.CharField(max_length=128, blank=True, null=True)
+    twitter = models.CharField(max_length=128, blank=True, null=True)
+    oficial = models.CharField(max_length=128, blank=True, null=True)
     uuid = models.UUIDField(editable=False, default=uuid.uuid4)
     slug = models.SlugField(max_length=255, unique=True)
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        self.slug = self.name.replace(' ', '-')
+        return super().save(*args, **kwargs)
 
 
 class Art(models.Model):
@@ -62,6 +70,7 @@ class Art(models.Model):
     type = models.IntegerField(choices=TYPE_CHOICES)
     created_at = models.DateField(null=False, default=now)
     tags = models.ManyToManyField(Tag, db_table='portfolio_art_tag')
+    characters = models.ManyToManyField('Character', db_table='portfolio_art_character')
     artists = models.ForeignKey(Artist, on_delete=models.CASCADE)
 
     class Meta:
